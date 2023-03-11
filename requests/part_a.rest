@@ -28,3 +28,13 @@ Content-Type: application/json
 {
     "number": "00-00-202223"
 }
+
+
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Dan Abramov",
+    "number": "040-00000"
+}

@@ -64,6 +64,8 @@ app.post("/api/persons", (request, response) => {
         err = 'name missing'
     } else if (!body.number) {
         err = 'number missing'
+    } else if (persons.find(p => p.name === body.name)) {
+        err = 'name must be unique'
     }
 
     if (err) {
