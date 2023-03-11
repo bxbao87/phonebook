@@ -55,6 +55,32 @@ app.delete("/api/persons/:id", (request, response) => {
     response.status(204).end()
 })
 
+app.post("/api/persons", (request, response) => {
+    const body = request.body
+    console.log(body)
+
+    let err = null
+    if (!body.name) {
+        err = 'name missing'
+    } else if (!body.number) {
+        err = 'number missing'
+    }
+
+    if (err) {
+        return response.status(400).json({
+            error: err
+        })
+    }
+
+    const newPerson = {
+        "id": Math.floor(Math.random()*1e9),
+        ...body
+    }
+    persons = persons.concat(newPerson)
+
+    response.json(newPerson)
+})
+
 const PORT = 3001
 app.listen(PORT, ()=>{
     console.log("Start listening...")
