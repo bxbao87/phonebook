@@ -8,3 +8,10 @@ Content-Type: application/json
     "name": "Dan Abramov",
     "number": "040-00000"
 }
+
+###
+GET http://localhost:3001/api/persons/64173695ae1a9cef3782436d
+
+
+###
+GET http://localhost:3001/info

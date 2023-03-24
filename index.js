@@ -39,22 +39,29 @@ app.get("/api/persons", (request, response) => {
 })
 
 app.get("/info", (request, response) => {
-    let times = new Date()
-    // console.log(times)
-    response.write(`<p>Phonebook has info for ${persons.length} people</p>`)
-    response.write(`<p>${times}</p>`)
-    response.end()
+    Person.find({})
+        .then(persons => {
+            if (persons) {
+                let times = new Date()
+                response.write(`<p>Phonebook has info for ${persons.length} people</p>`)
+                response.write(`<p>${times}</p>`)
+                response.end()
+            } else {
+                response.status(404).end()
+            }
+        })    
 })
 
-app.get("/api/persons/:id", (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(p => p.id === id)
-    
-    if (person) {
-        response.json(person)
-    } else {
-        response.status(404).end()
-    }
+app.get("/api/persons/:id", (request, response, next) => {
+    Person.find({_id: request.params.id})
+        .then(person => {
+            if (person) {
+                response.json(person)
+            } else {
+                response.status(404).end()
+            }
+        })
+        .catch(error => next(error))
 })
 
 app.delete("/api/persons/:id", (request, response, next) => {
